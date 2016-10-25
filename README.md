@@ -6,7 +6,7 @@ Made in under 72 hours (10/22/2016 - 10/24/2016)
 
 In order to open and run the 8 bit cpu, you need to have MML (MultiMedia Logic)
 	Download: http://www.softronix.com/logic.html
-Link that help understand how this thing works:
+Link that helps understand how this thing works:
 	https://www.youtube.com/watch?v=cNN_tTXABUA
 
 Instruction Set
