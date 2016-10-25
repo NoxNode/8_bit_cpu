@@ -22,7 +22,7 @@ ST		101	xx (src)	0		xx (dest)	Stores value from src into address in dest
 IN		110	xx (dest)	0		00		Stores user input into dest
 OUT		111	xx (src)	0		00		Outputs src to output
 
-Setps done before every instruction (after each enable/set or disable/set, the IC is incremented)
+Setps done before every instruction (after each step (separated by empty lines), the IC (Instruction Counter) is incremented)
 	enable	IP
 	set	MAR
 	
@@ -158,4 +158,35 @@ LD	100	xx (dest)	0	xx (src)	Loads from address in src into dest
 ST	101	xx (src)	0	xx (dest)	Stores value from src into address in dest
 IN	110	xx (dest)	0	00		Stores user input into dest
 OUT	111	xx (src)	0	00		Outputs src to output
+
+Acornyms;Meaning;Notes
+
+NOP	No operation (do nothing)
+CC	condition code
+nzp	negative, zero, positive
+CLR	clear
+CLK	clock
+MAR	Memory Address Register
+MDR	Memory Data Register
+IP	Instruction Pointer		Same as PC (Program Counter)
+IR	Instruction Register
+IC	Instruction Counter		Each instruction takes multiple signal sending steps to finish the instruction, so the instruction counter keeps track of which signal sending step we're on
+DIC	Decoded IC
+OR	Output Register
+NReg	Negation Register
+ANDI	AND Input Register
+ANDO	AND Output Register		I made AND and ADD have different input and output registers just because I already had the extra registers setup and would rather just rename things than make new logic to send signals to tell the ALU which operation to perform
+AIReg	ADD Input Register
+AOReg	ADD Output Register
+U	Usually means user
+S	Usually means set
+E	Usually means enable
+0-7	Bits 0-7
+In	input
+Out	output
+IN	IN instruction
+OUT	OUT instruction
+
+TODO:
+	immediate modes - it's kinda inconvenient to have to get values from the user instead of from instructions themselves
 ```
