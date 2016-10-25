@@ -52,9 +52,14 @@ JMP
 ADD
 	enable	src1
 	set	AIReg
+	if immediate mode == 1
+		set IVR
 
 	enable	AIReg
-	enable	src2
+	if immediate mode == 0
+		enable	src2
+	if immediate mode == 1
+		enable IVR
 	set	AO
 
 	enable	AO
@@ -62,9 +67,14 @@ ADD
 AND
 	enable	src1
 	set	ANDI
+	if immediate mode == 1
+		set IVR
 	
-	enable	src2
 	enable	ANDI
+	if immediate mode == 0
+		enable	src2
+	if immediate mode == 1
+		enable IVR
 	set	ANDO
 	
 	enable	ANDO
@@ -106,53 +116,32 @@ OUT
 	enable	src
 	set	output
 
-Example Program	(assembly)
+Example Program	(assembly) - adds 2 user inputted number then loops
 NOP
-IN	R0		; (user inputs 0)
-ST	R0	R0	; (store 0 into address 0)
-IN	R1		; (user inputs A)
-MOV	R0	R1	; (move A into R0)
-OUT	R0		; (output A)
-IN	R2		; (user inputs B)
-IN	R3		; (user inputs whether to do A+B or A-B)
-IN	R0		; (user inputs 0)
-LD	R0	R0	; (load back into R0)
-AND	R0	R3	; (check if R3 is a 0 or 1)
-IN	R0		; (user inputs 0xF)
-JMPz	R0		; (if R3 is 0, jump over taking 2SC of B)
-NOT	R2	R2	; (NOT B)
-IN	R0		; (user inputs 1)
-ADD	R2	R0	; (R2 is now the 2SC of the inputted value)
-ADD	R1	R0	; (do the addition)
-OUT	R0		; (output the result)
-JMPnzp	R3		; (loop back to instruction 0 or 1)
-Example Program (hex)
+IN	R0
+MOV	R1, R0
+IN	R0
+ADD	R0, R1
+OUT	R0
+AND	R0, 0
+JMPnzp	R0
+
+Example Program (hex) - adds 2 user inputted number then loops
 00
 C0
-A0
-C8
-61
+68
+C0
+21
 E0
-D0
-D8
-C0
-80
-43
-C0
-02
-76
-C0
-30
-28
-E0
-1F
+44
+07
 
 Instructions again
 
 Inst	Opcode	Operand 1	Mode	Operand 2	Notes
 JMP	000	xx (src)		nzp		Jumps to the address in register xx if specified flag is 1
-ADD	001	xx (src1)	0	xx (src2)	Always outputs to R0
-AND	010	xx (src1)	0	xx (src2)	Always outputs to R0
+ADD	001	xx (src1)	0/1	xx (src2)	Always outputs to R0
+AND	010	xx (src1)	0/1	xx (src2)	Always outputs to R0
 MOV/NOT	011	xx (dest)	0/1	xx (src)	The mode bit for MOV means to NOT the input or not
 LD	100	xx (dest)	0	xx (src)	Loads from address in src into dest
 ST	101	xx (src)	0	xx (dest)	Stores value from src into address in dest
@@ -178,6 +167,7 @@ ANDI	AND Input Register
 ANDO	AND Output Register		I made AND and ADD have different input and output registers just because I already had the extra registers setup and would rather just rename things than make new logic to send signals to tell the ALU which operation to perform
 AIReg	ADD Input Register
 AOReg	ADD Output Register
+IVR	Immediate value register
 U	Usually means user
 S	Usually means set
 E	Usually means enable
@@ -187,6 +177,4 @@ Out	output
 IN	IN instruction
 OUT	OUT instruction
 
-TODO:
-	immediate modes - it's kinda inconvenient to have to get values from the user instead of from instructions themselves
 ```
