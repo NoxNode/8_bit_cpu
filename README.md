@@ -177,4 +177,8 @@ Out	output
 IN	IN instruction
 OUT	OUT instruction
 
+TODO
+	make assembler
+	make logic simulator able to read from assembled binary file
+
 ```
